@@ -1,0 +1,45 @@
+# Stage 1: Initialize and download models
+FROM ollama/ollama AS model-downloader
+
+# Copy initialization script
+COPY <<EOF /init-models.sh
+#!/bin/sh
+set -e
+
+# Start ollama in the background
+ollama serve &
+# Wait for ollama to start
+sleep 10
+
+# Download and rename models
+ollama pull llama3.2:3b-instruct-q8_0
+ollama cp llama3.2:3b-instruct-q8_0 llama3:3b
+ollama rm llama3.2:3b-instruct-q8_0
+
+ollama pull hermes3:3b-llama3.2-q8_0
+ollama cp hermes3:3b-llama3.2-q8_0 hermes3:3b
+ollama rm hermes3:3b-llama3.2-q8_0
+
+# Shutdown ollama gracefully
+pkill ollama
+sleep 5
+EOF
+
+RUN chmod +x /init-models.sh
+
+# Run the initialization script
+RUN /init-models.sh
+
+# Stage 2: Final image
+FROM ollama/ollama
+
+# Copy the model data from the downloader stage
+COPY --from=model-downloader /root/.ollama /root/.ollama
+
+# Expose the default Ollama port
+EXPOSE 11434
+
+# Set the host to allow external connections
+ENV OLLAMA_HOST=0.0.0.0
+
+# Use the default entrypoint and command from the parent image
