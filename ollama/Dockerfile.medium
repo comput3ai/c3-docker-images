@@ -48,17 +48,15 @@ RUN /init-models.sh
 # Stage 2: Final image
 FROM ollama/ollama
 
-# Copy the model data from the downloader stage
-COPY --from=model-downloader /root/.ollama /root/.ollama
-
-# Expose the default Ollama port
-EXPOSE 11434
-
-# Set the host to allow external connections
-ENV OLLAMA_HOST=0.0.0.0
-
 # Add non-root user
 RUN groupadd -r -g 65532 ollama && \
     useradd -r -m -u 65532 -g ollama ollama
+
+# Copy the model data from the downloader stage
+COPY --from=model-downloader /root/.ollama /home/ollama/.ollama
+
+# Set permissions
+RUN chown -R ollama:ollama /home/ollama/.ollama && \
+    chmod -R 750 /home/ollama/.ollama
 
 USER 65532:65532
