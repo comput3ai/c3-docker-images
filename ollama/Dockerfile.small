@@ -3,11 +3,12 @@ FROM ollama/ollama AS model-downloader
 
 # Copy initialization script
 COPY <<EOF /init-models.sh
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # Start ollama in the background
 ollama serve &
+OLLAMA_PID=\$!
 
 # Wait for ollama to start
 sleep 10
@@ -17,25 +18,26 @@ download_model() {
     original_model=\$1
     final_name=\$2
     echo "Downloading \$final_name ..."
-    ollama pull \$original_model > /dev/null 2>&1 && echo "Downloaded \$final_name successfully."
-    ollama cp \$original_model \$final_name
+    ollama pull \$original_model > /dev/null 2>&1 && \
+    ollama cp \$original_model \$final_name && \
     ollama rm \$original_model
 }
 
 # Start all downloads in parallel
 download_model llama3.2:3b-instruct-q8_0 llama3:3b &
+PID1=\$!
 download_model hermes3:3b-llama3.2-q8_0 hermes3:3b &
+PID2=\$!
 
-# Wait for all background processes to complete
-wait
+# Wait for all processes
+wait \$PID1 \$PID2
 
-# Shutdown ollama gracefully
-pkill ollama
+# Shutdown ollama
+kill \$OLLAMA_PID
 sleep 5
 EOF
 
 RUN chmod +x /init-models.sh
-
 # Run the initialization script
 RUN /init-models.sh
 
@@ -56,5 +58,3 @@ RUN groupadd -r -g 65532 ollama && \
     useradd -r -m -u 65532 -g ollama ollama
 
 USER 65532:65532
-
-# Use the default entrypoint and command from the parent image
