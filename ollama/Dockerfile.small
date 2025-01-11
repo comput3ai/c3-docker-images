@@ -8,17 +8,25 @@ set -e
 
 # Start ollama in the background
 ollama serve &
+
 # Wait for ollama to start
 sleep 10
 
-# Download and rename models
-ollama pull llama3.2:3b-instruct-q8_0
-ollama cp llama3.2:3b-instruct-q8_0 llama3:3b
-ollama rm llama3.2:3b-instruct-q8_0
+# Function to download and rename a model
+download_model() {
+    original_model=\$1
+    final_name=\$2
+    ollama pull \$original_model
+    ollama cp \$original_model \$final_name
+    ollama rm \$original_model
+}
 
-ollama pull hermes3:3b-llama3.2-q8_0
-ollama cp hermes3:3b-llama3.2-q8_0 hermes3:3b
-ollama rm hermes3:3b-llama3.2-q8_0
+# Start all downloads in parallel
+download_model llama3.2:3b-instruct-q8_0 llama3:3b &
+download_model hermes3:3b-llama3.2-q8_0 hermes3:3b &
+
+# Wait for all background processes to complete
+wait
 
 # Shutdown ollama gracefully
 pkill ollama
