@@ -42,4 +42,10 @@ EXPOSE 11434
 # Set the host to allow external connections
 ENV OLLAMA_HOST=0.0.0.0
 
+# Add non-root user
+RUN groupadd -r -g 65532 ollama && \
+    useradd -r -m -u 65532 -g ollama ollama
+
+USER 65532:65532
+
 # Use the default entrypoint and command from the parent image
