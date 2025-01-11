@@ -16,7 +16,8 @@ sleep 10
 download_model() {
     original_model=\$1
     final_name=\$2
-    ollama pull \$original_model
+    echo "Downloading \$final_name ..."
+    ollama pull \$original_model > /dev/null 2>&1 && echo "Downloaded \$final_name successfully."
     ollama cp \$original_model \$final_name
     ollama rm \$original_model
 }
