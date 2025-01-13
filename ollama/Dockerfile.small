@@ -39,6 +39,9 @@ FROM ollama/ollama
 RUN groupadd -r -g 65532 ollama && \
     useradd -r -m -u 65532 -g ollama ollama
 
+# create diretory
+RUN mkdir -p /home/ollama/.ollama/ && chown ollama:ollama /home/ollama/.ollama/
+
 # Copy models from each builder
 COPY --from=llama-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --from=hermes-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
