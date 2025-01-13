@@ -1,53 +1,43 @@
-# Stage 1: Initialize and download models
-FROM ollama/ollama AS model-downloader
-
-# Copy initialization script
+# Base downloader stage with common setup
+FROM ollama/ollama AS base-downloader
 COPY <<EOF /init-models.sh
 #!/bin/bash
 set -e
 
+# Get model params
+original_model=\$1
+final_name=\$2
+
 # Start ollama in the background
 ollama serve &
 OLLAMA_PID=\$!
-
-# Wait for ollama to start
 sleep 10
 
-# Function to download and rename a model
-download_model() {
-    original_model=\$1
-    final_name=\$2
-    echo "Downloading \$final_name ..."
-    ollama pull \$original_model > /dev/null 2>&1 && \
-    ollama cp \$original_model \$final_name && \
-    ollama rm \$original_model
-}
+# Download and rename model
+echo "Downloading \$final_name ..."
+ollama pull \$original_model > /dev/null 2>&1 && \
+ollama cp \$original_model \$final_name && \
+ollama rm \$original_model
 
-# Start all downloads in parallel
-download_model llama3.3:70b-instruct-q4_0 llama3:70b &
-PID1=\$!
-
-# Wait for all processes
-wait \$PID1
-
-# Shutdown ollama
+# Cleanup
 kill \$OLLAMA_PID
 sleep 5
 EOF
-
 RUN chmod +x /init-models.sh
-# Run the initialization script
-RUN /init-models.sh
 
-# Stage 2: Final image
+# Separate stage for each model
+FROM base-downloader AS llama-70b-downloader
+RUN /init-models.sh "llama3.3:70b-instruct-q4_0" "llama3:70b"
+
+# Final image
 FROM ollama/ollama
 
 # Add non-root user
 RUN groupadd -r -g 65532 ollama && \
     useradd -r -m -u 65532 -g ollama ollama
 
-# Copy the model data from the downloader stage
-COPY --from=model-downloader /root/.ollama /home/ollama/.ollama
+# Copy models from each builder
+COPY --from=llama-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
 # Set permissions
 RUN chown -R ollama:ollama /home/ollama/.ollama && \
