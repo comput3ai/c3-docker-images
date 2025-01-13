@@ -59,8 +59,4 @@ COPY --from=hermes-8b-downloader /root/.ollama/models /home/ollama/.ollama/model
 COPY --from=llama-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --from=hermes-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
-# Set permissions
-RUN chown -R ollama:ollama /home/ollama/.ollama && \
-    chmod -R 750 /home/ollama/.ollama
-
 USER 65532:65532

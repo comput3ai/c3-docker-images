@@ -39,8 +39,4 @@ RUN groupadd -r -g 65532 ollama && \
 # Copy models from each builder
 COPY --from=llama-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
-# Set permissions
-RUN chown -R ollama:ollama /home/ollama/.ollama && \
-    chmod -R 750 /home/ollama/.ollama
-
 USER 65532:65532
