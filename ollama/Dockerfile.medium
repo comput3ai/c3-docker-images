@@ -26,6 +26,9 @@ EOF
 RUN chmod +x /init-models.sh
 
 # Separate stage for each model
+FROM base-downloader AS phi4-14b-downloader
+RUN /init-models.sh "phi4:14b-q8_0" "phi4:14b"
+
 FROM base-downloader AS llama-8b-downloader
 RUN /init-models.sh "llama3.1:8b-instruct-q8_0" "llama3:8b"
 

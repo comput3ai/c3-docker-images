@@ -32,6 +32,9 @@ RUN /init-models.sh "llama3.3:70b-instruct-q4_0" "llama3:70b"
 FROM base-downloader AS hermes-70b-downloader
 RUN /init-models.sh "hermes3:70b-llama3.1-q4_0" "hermes3:70b"
 
+FROM base-downloader AS phi4-14b-downloader
+RUN /init-models.sh "phi4:14b-q8_0" "phi4:14b"
+
 FROM base-downloader AS llama-8b-downloader
 RUN /init-models.sh "llama3.1:8b-instruct-q8_0" "llama3:8b"
 
