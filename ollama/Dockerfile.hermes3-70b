@@ -1,5 +1,5 @@
 # Base downloader stage with common setup
-FROM ollama/ollama AS base-downloader
+FROM ollama/ollama:0.5.7 AS base-downloader
 COPY <<EOF /init-models.sh
 #!/bin/bash
 set -e
