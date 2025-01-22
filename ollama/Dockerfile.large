@@ -33,7 +33,7 @@ FROM base-downloader AS hermes-70b-downloader
 RUN /init-models.sh "hermes3:70b-llama3.1-q4_0" "hermes3:70b"
 
 FROM base-downloader AS deepseek-70b-downloader
-RUN /init-models.sh "deepseek-r1:70b-llama-distill-q8_0" "deepseek-r1:70b"
+RUN /init-models.sh "deepseek-r1:70b-llama-distill-q4_K_M" "deepseek-r1:70b"
 
 # Final image
 FROM ollama/ollama
