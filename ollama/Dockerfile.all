@@ -32,14 +32,20 @@ RUN /init-models.sh "llama3.3:70b-instruct-q4_0" "llama3:70b"
 FROM base-downloader AS hermes-70b-downloader
 RUN /init-models.sh "hermes3:70b-llama3.1-q4_0" "hermes3:70b"
 
-FROM base-downloader AS phi4-14b-downloader
-RUN /init-models.sh "phi4:14b-q8_0" "phi4:14b"
+FROM base-downloader AS deepseek-70b-downloader
+RUN /init-models.sh "deepseek-r1:70b-llama-distill-q8_0" "deepseek-r1:70b"
 
 FROM base-downloader AS llama-8b-downloader
 RUN /init-models.sh "llama3.1:8b-instruct-q8_0" "llama3:8b"
 
 FROM base-downloader AS hermes-8b-downloader
 RUN /init-models.sh "hermes3:8b-llama3.1-q8_0" "hermes3:8b"
+
+FROM base-downloader AS phi4-14b-downloader
+RUN /init-models.sh "phi4:14b-q8_0" "phi4:14b"
+
+FROM base-downloader AS deepseek-8b-downloader
+RUN /init-models.sh "deepseek-r1:8b-llama-distill-q8_0" "deepseek-r1:8b"
 
 FROM base-downloader AS llama-3b-downloader
 RUN /init-models.sh "llama3.2:3b-instruct-q8_0" "llama3:3b"
@@ -57,9 +63,11 @@ RUN groupadd -r -g 65532 ollama && \
 # Copy models from each builder
 COPY --chown=ollama:ollama --from=llama-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=phi4-14b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=deepseek-r1:70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=llama-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=phi4-14b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=deepseek-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=llama-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
