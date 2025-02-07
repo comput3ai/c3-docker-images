@@ -1,5 +1,5 @@
 # Start with the base image
-FROM ghcr.io/open-webui/open-webui:v0.5.7
+FROM ghcr.io/open-webui/open-webui:v0.5.10
 
 # Run the initialization process
 ENV WEBUI_AUTH=false
