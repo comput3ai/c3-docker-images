@@ -38,6 +38,12 @@ RUN /init-models.sh "hermes3:70b-llama3.1-q4_K_M" "hermes3:70b"
 FROM base-downloader AS deepseek-70b-downloader
 RUN /init-models.sh "deepseek-r1:70b-llama-distill-q4_K_M" "deepseek-r1:70b"
 
+FROM base-downloader AS qwen2.5-coder-32b-downloader
+RUN /init-models.sh "qwen2.5-coder:32b-instruct-q8_0" "qwen2.5-coder:32b"
+
+FROM base-downloader AS qwq-32b-downloader
+RUN /init-models.sh "qwq:32b-q8_0" "qwq:32b"
+
 FROM base-downloader AS llama-8b-downloader
 RUN /init-models.sh "llama3.1:8b-instruct-q8_0" "llama3:8b"
 
@@ -67,6 +73,8 @@ RUN groupadd -r -g 65532 ollama && \
 COPY --chown=ollama:ollama --from=llama-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=deepseek-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=qwen2.5-coder-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=qwq-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=llama-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=phi4-14b-downloader /root/.ollama/models /home/ollama/.ollama/models
