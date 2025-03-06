@@ -1,5 +1,8 @@
+# Define the version as a build argument
+ARG OLLAMA_VERSION=0.5.13
+
 # Base downloader stage with common setup
-FROM ollama/ollama:0.5.11 AS base-downloader
+FROM ollama/ollama:${OLLAMA_VERSION} AS base-downloader
 COPY <<EOF /init-models.sh
 #!/bin/bash
 set -e
@@ -33,7 +36,7 @@ FROM base-downloader AS hermes-3b-downloader
 RUN /init-models.sh "hermes3:3b-llama3.2-q8_0" "hermes3:3b"
 
 # Final image
-FROM ollama/ollama
+FROM ollama/ollama:${OLLAMA_VERSION}
 
 # Add non-root user
 RUN groupadd -r -g 65532 ollama && \

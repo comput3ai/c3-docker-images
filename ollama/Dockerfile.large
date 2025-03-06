@@ -1,5 +1,8 @@
+# Define the version as a build argument
+ARG OLLAMA_VERSION=0.5.13
+
 # Base downloader stage with common setup
-FROM ollama/ollama:0.5.11 AS base-downloader
+FROM ollama/ollama:${OLLAMA_VERSION} AS base-downloader
 COPY <<EOF /init-models.sh
 #!/bin/bash
 set -e
@@ -42,7 +45,7 @@ FROM base-downloader AS qwq-32b-downloader
 RUN /init-models.sh "qwq:32b-q8_0" "qwq:32b"
 
 # Final image
-FROM ollama/ollama
+FROM ollama/ollama:${OLLAMA_VERSION}
 
 # Add non-root user
 RUN groupadd -r -g 65532 ollama && \
