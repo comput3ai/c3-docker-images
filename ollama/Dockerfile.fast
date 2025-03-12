@@ -16,11 +16,12 @@ ollama serve &
 OLLAMA_PID=\$!
 sleep 10
 
-# Download and rename model
-echo "Downloading \$final_name ..."
-ollama pull \$original_model > /dev/null 2>&1 && \
-ollama cp \$original_model \$final_name && \
-ollama rm \$original_model
+# Only perform rename if the names are different
+if [ "\$original_model" != "\$final_name" ]; then
+  echo "Renaming \$original_model to \$final_name ..."
+  ollama cp \$original_model \$final_name && \
+  ollama rm \$original_model
+fi
 
 # Cleanup
 kill \$OLLAMA_PID
