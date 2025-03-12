@@ -25,19 +25,6 @@ A lightweight container with small models that can run on limited hardware.
 
 **Ideal for:** Edge devices, personal computers with limited resources, quick experimentation
 
-### 🏃 Medium Container (`ollama/Dockerfile.medium`)
-
-A balanced container offering good performance with reasonable resource requirements.
-
-**Models included:**
-- **Llama3:8b** (8-bit quantized): Meta's multilingual model optimized for dialogue use cases
-- **Hermes3:8b** (8-bit quantized): Enhanced version with improved multi-turn conversation capabilities
-- **Phi4:14b** (8-bit quantized): Microsoft's state-of-the-art 14B parameter model with 16k token context window, built on synthetic data and optimized for instruction following
-- **Deepseek-R1:8b** (8-bit quantized): Reasoning-focused model with performance comparable to larger models
-- **QwQ:32b** (4-bit quantized): Qwen's specialized reasoning model capable of enhanced performance on complex reasoning tasks
-
-**Ideal for:** Standard development machines, moderate workloads
-
 ### 🐘 Large Container (`ollama/Dockerfile.large`)
 
 A high-performance container with larger models for advanced capabilities.
@@ -56,8 +43,12 @@ Combines small and medium models for a balance of speed and capability.
 
 **Models included:**
 - All models from the small container
-- All models from the medium container
+- **Llama3:8b** (8-bit quantized): Meta's multilingual model optimized for dialogue use cases
+- **Hermes3:8b** (8-bit quantized): Enhanced version with improved multi-turn conversation capabilities
+- **Deepseek-R1:8b** (8-bit quantized): Reasoning-focused model with performance comparable to larger models
+- **Phi4:14b** (8-bit quantized): Microsoft's state-of-the-art 14B parameter model with 16k token context window, built on synthetic data and optimized for instruction following
 - **Gemma3:27b**: Google's powerful multimodal model built on Gemini technology, featuring a 128K context window and support for over 140 languages
+- **QwQ:32b** (4-bit quantized): Qwen's specialized reasoning model capable of enhanced performance on complex reasoning tasks
 
 **Ideal for:** Development environments requiring a variety of model sizes
 
@@ -66,9 +57,7 @@ Combines small and medium models for a balance of speed and capability.
 A comprehensive collection of all models across all size categories.
 
 **Models included:**
-- All models from the large container
-- All models from the medium container
-- All models from the small container
+- All models
 - **Qwen2.5-coder:32b** (8-bit quantized): Larger code-specific Qwen model for advanced code tasks
 
 **Ideal for:** Testing environments, situations where model flexibility is paramount
