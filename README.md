@@ -73,7 +73,7 @@ A comprehensive collection of all models across all size categories.
 
 **Ideal for:** Testing environments, situations where model flexibility is paramount
 
-### 💻 Coding Container (`ollama/Dockerfile.coding`)
+### 💻 Coder Container (`ollama/Dockerfile.coding`)
 
 Specialized for code generation and programming tasks.
 
