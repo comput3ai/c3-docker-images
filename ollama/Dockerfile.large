@@ -41,9 +41,6 @@ RUN /init-models.sh "deepseek-r1:70b-llama-distill-q4_K_M" "deepseek-r1:70b"
 FROM base-downloader AS qwq-32b-downloader
 RUN /init-models.sh "qwq:32b-q8_0" "qwq:32b"
 
-FROM base-downloader AS gemma3-27b-downloader
-RUN /init-models.sh "gemma3:27b" "gemma3:27b"
-
 # Final image
 FROM ollama/ollama:${OLLAMA_VERSION}
 
@@ -56,6 +53,5 @@ COPY --chown=ollama:ollama --from=llama-70b-downloader /root/.ollama/models /hom
 COPY --chown=ollama:ollama --from=hermes-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=deepseek-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=qwq-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=gemma3-27b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
 USER 65532:65532
