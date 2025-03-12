@@ -1,9 +1,8 @@
 # Comput3.ai Docker Images 🚀
 
-[![GitHub stars](https://img.shields.io/github/stars/comput3/c3-docker-images?style=flat-square)](https://github.com/comput3/c3-docker-images/stargazers)
-[![GitHub license](https://img.shields.io/github/license/comput3/c3-docker-images?style=flat-square)](https://github.com/comput3/c3-docker-images/blob/main/LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/comput3/ollama?style=flat-square)](https://hub.docker.com/r/comput3/ollama)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/comput3/c3-docker-images/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/comput3ai/c3-docker-images?style=flat-square)](https://github.com/comput3ai/c3-docker-images/stargazers)
+[![GitHub license](https://img.shields.io/github/license/comput3ai/c3-docker-images?style=flat-square)](https://github.com/comput3ai/c3-docker-images/blob/main/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/comput3ai/c3-docker-images/pulls)
 
 This repository contains Docker images for [Comput3.ai](https://comput3.ai), providing pre-configured containers for running various AI models through Ollama and a web interface through Open WebUI.
 
