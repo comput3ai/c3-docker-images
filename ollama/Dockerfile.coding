@@ -55,7 +55,7 @@ RUN groupadd -r -g 65532 ollama && \
 COPY --chown=ollama:ollama --from=qwen2.5-coder-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=codegemma-7b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=codellama-34b-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=qwen2.5-coder-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=deepseek-coder-v2-16b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=qwq-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
 USER 65532:65532

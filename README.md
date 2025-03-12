@@ -47,6 +47,7 @@ A high-performance container with larger models for advanced capabilities.
 - **Hermes3:70b** (4-bit quantized): Powerful generalist language model with advanced agentic capabilities, improved reasoning, and long context coherence
 - **Deepseek-R1:70b** (4-bit quantized): DeepSeek's first-generation reasoning model with performance comparable to OpenAI-o1
 - **QwQ:32b** (8-bit quantized): Reasoning model achieving competitive performance against state-of-the-art reasoning models
+- **Gemma3:27b**: Google's powerful multimodal model built on Gemini technology, featuring a 128K context window and support for over 140 languages
 
 **Ideal for:** High-end workstations, GPU-equipped systems, production environments
 
@@ -57,7 +58,7 @@ Combines small and medium models for a balance of speed and capability.
 **Models included:**
 - All models from the small container
 - All models from the medium container
-- **Qwen2.5-coder:14b** (8-bit quantized): Code-specific Qwen model with improved code generation capabilities
+- **Gemma3:27b**: Google's powerful multimodal model built on Gemini technology, featuring a 128K context window and support for over 140 languages
 
 **Ideal for:** Development environments requiring a variety of model sizes
 
@@ -139,6 +140,7 @@ Please note that while these Docker images are provided under the MIT license, t
 - 🔸 Microsoft's Phi-4 model is subject to the [Microsoft Research License](https://huggingface.co/microsoft/phi-4/blob/main/LICENSE)
 - 🔶 Qwen models are subject to the [Qwen License Agreement](https://qwenlm.github.io/blog/qwen-license/)
 - 🔷 DeepSeek models are subject to the [DeepSeek License](https://github.com/deepseek-ai/DeepSeek-Coder/blob/main/LICENSE)
+- 🔹 Google's Gemma 3 model is subject to the [Gemma License](https://ai.google.dev/gemma/terms)
 
 ⚖️ Be sure to review these licenses before using these models in your applications. Comput3.AI provides these containers to make AI more accessible, but we respect the intellectual property rights of model creators!
 
