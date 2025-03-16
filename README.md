@@ -4,12 +4,13 @@
 [![GitHub license](https://img.shields.io/github/license/comput3ai/c3-docker-images?style=flat-square)](https://github.com/comput3ai/c3-docker-images/blob/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/comput3ai/c3-docker-images/pulls)
 
-This repository contains Docker images for [Comput3.ai](https://comput3.ai), providing pre-configured containers for running various AI models through Ollama and a web interface through Open WebUI.
+This repository contains Docker images for [Comput3.ai](https://comput3.ai), providing pre-configured containers for running various AI models through Ollama, a web interface through Open WebUI, and stable diffusion image generation with ComfyUI.
 
 ## Repository Structure
 
 - `ollama/` - Contains Dockerfiles for various Ollama model configurations
 - `open-webui/` - Contains a Dockerfile for the Open WebUI interface
+- `ComfyUI/` - Contains a Dockerfile for setting up ComfyUI with common extensions
 
 ## Ollama Images
 
@@ -62,7 +63,7 @@ A comprehensive collection of all models across all size categories.
 
 **Ideal for:** Testing environments, situations where model flexibility is paramount
 
-### 💻 Coder Container (`ollama/Dockerfile.coding`)
+### 💻 Coder Container (`ollama/Dockerfile.coder`)
 
 Specialized for code generation and programming tasks.
 
@@ -93,7 +94,7 @@ cd c3-docker-images/ollama
 ./build.sh
 ```
 
-To build other variants (fast, all, coding), use Docker build directly:
+To build other variants (fast, all, coder), use Docker build directly:
 
 ```bash
 cd ollama
@@ -107,6 +108,13 @@ cd open-webui
 docker build -t comput3/open-webui:latest .
 ```
 
+For building the ComfyUI image:
+
+```bash
+cd ComfyUI
+docker build -t comput3/comfyui:latest .
+```
+
 ### Build Time Considerations ⏱️
 
 Building these images requires downloading the AI models, which can vary in time depending on your internet connection speed. The larger containers (especially the "all" and "large" variants) will take significantly longer to build.
@@ -116,7 +124,8 @@ Approximate build times on a 500Mbps connection:
 - 🏃 Medium container: 9-18 minutes
 - 🐘 Large container: 25-50 minutes
 - 🌟 All container: 35-70 minutes
-- 💻 Coding container: 12-36 minutes
+- 💻 Coder container: 12-36 minutes
+- 🎨 ComfyUI container: 15-30 minutes
 
 ⚠️ If your connection is slower, build times will increase proportionally. Be patient - these models are worth the wait! ⚠️
 
@@ -129,6 +138,7 @@ Please note that while these Docker images are provided under the MIT license, t
 - 🔶 Qwen models are subject to the [Qwen License Agreement](https://qwenlm.github.io/blog/qwen-license/)
 - 🔷 DeepSeek models are subject to the [DeepSeek License](https://github.com/deepseek-ai/DeepSeek-Coder/blob/main/LICENSE)
 - 🔹 Google's Gemma 3 model is subject to the [Gemma License](https://ai.google.dev/gemma/terms)
+- 🎨 ComfyUI and its extensions are subject to their respective licenses
 
 ⚖️ Be sure to review these licenses before using these models in your applications. Comput3.AI provides these containers to make AI more accessible, but we respect the intellectual property rights of model creators!
 
@@ -140,7 +150,7 @@ Please note that while these Docker images are provided under the MIT license, t
 docker run -d --name ollama -p 11434:11434 comput3/ollama:medium
 ```
 
-You can swap `:medium` with `:small`, `:large`, `:fast`, `:all`, or `:coding` depending on your needs!
+You can swap `:medium` with `:small`, `:large`, `:fast`, `:all`, or `:coder` depending on your needs!
 
 ### Running Open WebUI 🖥️
 
@@ -180,6 +190,65 @@ volumes:
 
 Run with: `docker-compose up -d` 🚀
 
+### Running ComfyUI 🎨
+
+```bash
+docker run -d --name comfyui -p 8188:8188 --gpus all comput3/comfyui:latest
+```
+
+You can access ComfyUI by navigating to `http://localhost:8188` in your web browser.
+
+### Using Volume Mounts with ComfyUI 📂
+
+Volume mounts allow you to access files from your host system inside the Docker container, which is especially useful for ComfyUI model files and outputs.
+
+```bash
+docker run -d --name comfyui --gpus all \
+  -v /local/path/to/models/checkpoints:/app/ComfyUI/models/checkpoints \
+  -v /local/path/to/models/loras:/app/ComfyUI/models/loras \
+  -v /local/path/to/outputs:/app/ComfyUI/output \
+  -p 8188:8188 \
+  comput3/comfyui:latest
+```
+
+For a more complete setup, you can use Docker Compose:
+
+```yaml
+# docker-compose.yml for ComfyUI
+version: '3.8'
+
+services:
+  comfyui:
+    image: comput3/comfyui:latest
+    ports:
+      - "8188:8188"
+    volumes:
+      # Model directories
+      - ./models/checkpoints:/app/ComfyUI/models/checkpoints
+      - ./models/loras:/app/ComfyUI/models/loras
+      - ./models/controlnet:/app/ComfyUI/models/controlnet
+      - ./models/vae:/app/ComfyUI/models/vae
+      # Output directory
+      - ./outputs:/app/ComfyUI/output
+      # Custom workflows
+      - ./workflows:/app/ComfyUI/workflows
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+```
+
+The key model directories in the ComfyUI container are:
+- `/app/ComfyUI/models/checkpoints` - Stable Diffusion model files (.safetensors, .ckpt)
+- `/app/ComfyUI/models/loras` - LoRA adapters
+- `/app/ComfyUI/models/controlnet` - ControlNet models
+- `/app/ComfyUI/models/vae` - VAE models
+
+Using volume mounts allows you to keep your models outside the container, making them easier to update and manage.
+
 ### Hardware Requirements 💪
 
 Recommended minimum specs for each container type:
@@ -189,7 +258,8 @@ Recommended minimum specs for each container type:
 - 🐘 **Large**: 16GB RAM, 8 CPU cores, 40GB disk space + GPU recommended
 - ⚡ **Fast**: 8GB RAM, 4 CPU cores, 20GB disk space
 - 🌟 **All**: 32GB RAM, 8+ CPU cores, 60GB disk space + GPU strongly recommended
-- 💻 **Coding**: 16GB RAM, 8 CPU cores, 30GB disk space + GPU recommended
+- 💻 **Coder**: 16GB RAM, 8 CPU cores, 30GB disk space + GPU recommended
+- 🎨 **ComfyUI**: 16GB RAM, 6 CPU cores, 10GB disk space + NVIDIA GPU required
 
 ## Contributing 👥
 
@@ -209,8 +279,23 @@ Contributions are welcome! Please feel free to submit a Pull Request. Here are w
 - 🧠 Democratizing access to AI technology
 - 🌱 Supporting the AI community
 - 🛠️ Providing practical tools for real-world applications
+- 🎨 Enabling creative AI workflows with stable diffusion tools like ComfyUI
 
-These Docker images are published to foster innovation and help developers easily experiment with state-of-the-art AI models.
+These Docker images are published to foster innovation and help developers easily experiment with state-of-the-art AI models and creative tools.
+
+## ComfyUI 🎨
+
+The ComfyUI container provides a ready-to-use environment for stable diffusion image generation with a feature-rich UI.
+
+**Features included:**
+- Base ComfyUI installation with NVIDIA GPU support
+- ComfyUI Manager for easy extension and model management
+- Video Helper Suite for video generation workflows
+- Easy-Use nodes for streamlined workflows
+- Sonic nodes for audio processing capabilities
+- WAS Node Suite with additional advanced nodes
+
+**Ideal for:** Image generation, AI art creation, and video synthesis workflows
 
 ## License 📄
 
