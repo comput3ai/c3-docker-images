@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.6.1-cudnn-runtime-ubuntu24.04
+FROM nvidia/cuda:12.8.1-cudnn-runtime-ubuntu24.04
 
 # Install Python and required packages
 RUN apt-get update && apt-get install -y \
@@ -27,7 +27,7 @@ SHELL ["/bin/bash", "-c"]
 # Install comfy-cli and required dependencies
 RUN source /app/venv/bin/activate && \
     pip install --upgrade pip && \
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126 && \
+    pip install torch torchvision torchaudio && \
     pip install comfy-cli
 
 # Install ComfyUI
