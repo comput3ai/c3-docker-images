@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.8.1-cudnn-runtime-ubuntu24.04
+FROM nvidia/cuda:12.6.1-cudnn-runtime-ubuntu24.04
 
 # Install Python and required packages
 RUN apt-get update && apt-get install -y \
@@ -24,8 +24,11 @@ RUN python3 -m venv /app/venv
 # Use shell form for commands that need to source the activation script
 SHELL ["/bin/bash", "-c"]
 
-# Install comfy-cli
-RUN source /app/venv/bin/activate && pip install --upgrade pip && pip install comfy-cli
+# Install comfy-cli and required dependencies
+RUN source /app/venv/bin/activate && \
+    pip install --upgrade pip && \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126 && \
+    pip install comfy-cli
 
 # Install ComfyUI
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI install --nvidia
@@ -36,6 +39,12 @@ RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyU
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-easy-use
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI_Sonic
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install was-node-suite-comfyui
+
+# Custom Nodes outside of ComfyUI Repository
+RUN source /app/venv/bin/activate && cd /app/ComfyUI/custom_nodes && git clone https://github.com/nedos/ComfyUI-CSM-Nodes.git && cd ComfyUI-CSM-Nodes && pip install -r requirements.txt
+
+# Create model directories to ensure proper permissions
+RUN mkdir -p /app/ComfyUI/models/checkpoints /app/ComfyUI/models/sonic /app/ComfyUI/models/sesame /app/ComfyUI/models/sesame_tokenizer
 
 # Expose port (default ComfyUI port is 8188)
 EXPOSE 8188
