@@ -44,6 +44,9 @@ RUN /init-models.sh "deepseek-coder-v2:16b-lite-instruct-fp16" "deepseek-coder-v
 FROM base-downloader AS qwq-32b-downloader
 RUN /init-models.sh "qwq:32b-q8_0" "qwq:32b"
 
+FROM base-downloader AS granite-code-downloader
+RUN /init-models.sh "granite-code:34b-instruct-q8_0" "granite-code:34b
+
 # Final image
 FROM ollama/ollama:${OLLAMA_VERSION}
 
@@ -57,5 +60,6 @@ COPY --chown=ollama:ollama --from=codegemma-7b-downloader /root/.ollama/models /
 COPY --chown=ollama:ollama --from=codellama-34b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=deepseek-coder-v2-16b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=qwq-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=granite-code-downloader /root/.ollama/models /home/ollama/.ollama/models
 
 USER 65532:65532
