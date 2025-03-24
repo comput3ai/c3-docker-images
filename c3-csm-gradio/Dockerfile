@@ -1,11 +1,11 @@
 FROM ghcr.io/comput3ai/c3-csm-gradio:latest
 ARG HF_TOKEN
 
-# Copy the initialization script (already executable)
-COPY --chmod=755 init.sh /tmp/init.sh
+# Copy the initialization script
+COPY --chmod=755 init.py /app/csm/init.py
 
-# Execute the initialization script during build
-RUN /tmp/init.sh
+# Run the initialization script
+RUN python /app/csm/init.py
 
 # Command to run when the container starts
 CMD ["python", "app.py"]
