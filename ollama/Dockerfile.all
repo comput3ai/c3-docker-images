@@ -1,5 +1,5 @@
 # Define the version as a build argument
-ARG OLLAMA_VERSION=0.6.1
+ARG OLLAMA_VERSION=0.6.3
 
 # Base downloader stage with common setup
 FROM ollama/ollama:${OLLAMA_VERSION} AS base-downloader
