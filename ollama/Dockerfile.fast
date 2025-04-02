@@ -20,12 +20,11 @@ sleep 10
 echo "Downloading \$original_model ..."
 ollama pull \$original_model > /dev/null 2>&1
 
-# Only perform rename if the names are different
-if [ "\$original_model" != "\$final_name" ]; then
-  echo "Renaming \$original_model to \$final_name ..."
-  ollama cp \$original_model \$final_name && \
-  ollama rm \$original_model
-fi
+# Download and rename model
+echo "Downloading \$final_name ..."
+ollama pull \$original_model > /dev/null 2>&1 && \
+ollama cp \$original_model \$final_name && \
+ollama rm \$original_model
 
 # Cleanup
 kill \$OLLAMA_PID
@@ -38,7 +37,7 @@ FROM base-downloader AS qwq-32b-downloader
 RUN /init-models.sh "qwq:32b-q4_K_M" "qwq:32b"
 
 FROM base-downloader AS gemma3-27b-downloader
-RUN /init-models.sh "gemma3:27b" "gemma3:27b"
+RUN /init-models.sh "gemma3:27b-it-q4_K_M" "gemma3:27b"
 
 FROM base-downloader AS phi4-14b-downloader
 RUN /init-models.sh "phi4:14b-q8_0" "phi4:14b"
