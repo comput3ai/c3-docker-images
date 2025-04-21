@@ -12,7 +12,7 @@ RUN set -e && \
     APP_PID=$! \
     # Wait for initialization (120 seconds) \
     echo "Waiting for initialization..." && \
-    sleep 300 && \
+    sleep 900 && \
     echo "Initialization period complete" && \
     # Kill the main process \
     kill $APP_PID && \
