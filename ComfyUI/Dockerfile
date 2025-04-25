@@ -1,4 +1,11 @@
+# Define the version as a build argument
+ARG COMFYUI_VERSION=v0.3.30
+
+# Base downloader stage with common setup
 FROM nvidia/cuda:12.8.1-cudnn-runtime-ubuntu24.04
+
+# Re-declare the ARG after FROM
+ARG COMFYUI_VERSION
 
 # Install Python and required packages
 RUN apt-get update && apt-get install -y \
@@ -31,20 +38,21 @@ RUN source /app/venv/bin/activate && \
     pip install comfy-cli
 
 # Install ComfyUI
-RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI install --nvidia
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI install --version $COMFYUI_VERSION --nvidia
 
 # Install ComfyUI custom_nodes
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-manager
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-videohelpersuite
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-easy-use
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI_Sonic
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI-GGUF
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install was-node-suite-comfyui
 
 # Custom Nodes outside of ComfyUI Repository
 RUN source /app/venv/bin/activate && cd /app/ComfyUI/custom_nodes && git clone https://github.com/nedos/ComfyUI-CSM-Nodes.git && cd ComfyUI-CSM-Nodes && pip install -r requirements.txt
 
 # Create model directories to ensure proper permissions
-RUN mkdir -p /app/ComfyUI/models/checkpoints /app/ComfyUI/models/sonic /app/ComfyUI/models/sesame /app/ComfyUI/models/sesame_tokenizer
+RUN mkdir -p /app/ComfyUI/models/checkpoints /app/ComfyUI/models/sonic /app/ComfyUI/models/sesame /app/ComfyUI/models/sesame_tokenizer /app/ComfyUI/models/vae /app/ComfyUI/models/text_encoders /app/ComfyUI/models/diffusion_models /app/ComfyUI/models/clip_vision
 
 # Expose port (default ComfyUI port is 8188)
 EXPOSE 8188
