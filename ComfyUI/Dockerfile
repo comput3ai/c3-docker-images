@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-venv \
     git \
+    libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
@@ -35,6 +36,7 @@ SHELL ["/bin/bash", "-c"]
 RUN source /app/venv/bin/activate && \
     pip install --upgrade pip && \
     pip install torch torchvision torchaudio && \
+    pip install triton && \
     pip install comfy-cli
 
 # Install ComfyUI
@@ -46,15 +48,15 @@ RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyU
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-easy-use
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI_Sonic
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI-GGUF
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI-WanVideoWrapper
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui_essentials
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-art-venture
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-logicutils
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-kjnodes
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install was-node-suite-comfyui
 
-# Custom Nodes outside of ComfyUI Repository
-RUN source /app/venv/bin/activate && cd /app/ComfyUI/custom_nodes && git clone https://github.com/nedos/ComfyUI-CSM-Nodes.git && cd ComfyUI-CSM-Nodes && pip install -r requirements.txt
-
 # Create model directories to ensure proper permissions
-RUN mkdir -p /app/ComfyUI/models/checkpoints /app/ComfyUI/models/sonic /app/ComfyUI/models/sesame /app/ComfyUI/models/sesame_tokenizer /app/ComfyUI/models/vae /app/ComfyUI/models/text_encoders /app/ComfyUI/models/diffusion_models /app/ComfyUI/models/clip_vision
+RUN mkdir -p /app/ComfyUI/models/checkpoints /app/ComfyUI/models/sonic /app/ComfyUI/models/vae /app/ComfyUI/models/text_encoders /app/ComfyUI/models/diffusion_models /app/ComfyUI/models/clip_vision
 
 # Expose port (default ComfyUI port is 8188)
 EXPOSE 8188
