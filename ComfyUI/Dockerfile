@@ -46,6 +46,8 @@ RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyU
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-easy-use
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI_Sonic
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install ComfyUI-GGUF
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui_essentials
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-art-venture
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install was-node-suite-comfyui
 
 # Custom Nodes outside of ComfyUI Repository
