@@ -36,6 +36,7 @@ A high-performance container with larger models for advanced capabilities.
 - **Llama3:70b** (4-bit quantized): Meta's most powerful multilingual LLM optimized for dialogue, outperforming many open and closed source chat models
 - **Hermes3:70b** (4-bit quantized): Powerful generalist language model with advanced agentic capabilities, improved reasoning, and long context coherence
 - **Deepseek-R1:70b** (4-bit quantized): DeepSeek's first-generation reasoning model with performance comparable to OpenAI-o1
+- **Llama4:17b** (4-bit quantized): Meta's latest multimodal MoE (Mixture-of-Experts) model with 17B active parameters (from a 109B parameter model), supporting text and image input with multilingual capabilities across 12 languages
 - **QwQ:32b** (8-bit quantized): Reasoning model achieving competitive performance against state-of-the-art reasoning models
 
 **Ideal for:** High-end workstations, GPU-equipped systems, production environments
@@ -50,7 +51,9 @@ Combines small and medium models for a balance of speed and capability.
 - **Hermes3:8b** (8-bit quantized): Enhanced version with improved multi-turn conversation capabilities
 - **Deepseek-R1:8b** (8-bit quantized): Reasoning-focused model with performance comparable to larger models
 - **Phi4:14b** (8-bit quantized): Microsoft's state-of-the-art 14B parameter model with 16k token context window, built on synthetic data and optimized for instruction following
-- **Gemma3:27b**: Google's powerful multimodal model built on Gemini technology, featuring a 128K context window and support for over 140 languages
+- **Gemma3:27b** (4-bit quantized): Google's powerful multimodal model built on Gemini technology, featuring a 128K context window and support for over 140 languages
+- **Llama3.2-vision:11b** (8-bit quantized): Meta's vision-language model capable of understanding images and responding to visual queries
+- **Granite3:2b** (8-bit quantized): A small and efficient visual reasoning model for tasks involving images
 - **QwQ:32b** (4-bit quantized): Qwen's specialized reasoning model capable of enhanced performance on complex reasoning tasks
 
 **Ideal for:** Development environments requiring a variety of model sizes
@@ -74,6 +77,7 @@ Specialized for code generation and programming tasks.
 - **CodeGemma:7b** (fp16): Google's powerful, lightweight model for code completion, generation, and instruction following
 - **CodeLlama:34b** (8-bit quantized): Meta's specialized code model supporting multiple programming languages including Python, C++, Java, PHP, TypeScript, C#, and Bash
 - **Deepseek-coder-v2:16b** (fp16): Open-source Mixture-of-Experts code model with performance comparable to GPT4-Turbo in code-specific tasks
+- **Granite-code:34b** (8-bit quantized): Large code-specific model with excellent performance across multiple programming languages
 - **QwQ:32b** (8-bit quantized): Reasoning model that enhances performance in complex programming problem-solving
 
 **Ideal for:** Software development, code completion, programming assistance
@@ -120,6 +124,12 @@ The ComfyUI container provides a ready-to-use environment for stable diffusion i
 - Video Helper Suite for video generation workflows
 - Easy-Use nodes for streamlined workflows
 - Sonic nodes for audio processing capabilities
+- GGUF model support for running LLMs directly in ComfyUI
+- Video Wrapper nodes for enhanced video capabilities
+- ComfyUI Essentials for core functionality extensions
+- Art Venture nodes for creative workflows
+- Logic Utils for complex workflow creation
+- KJNodes collection of utility nodes
 - WAS Node Suite with additional advanced nodes
 
 **Ideal for:** Image generation, AI art creation, and video synthesis workflows
