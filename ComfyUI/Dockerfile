@@ -2,7 +2,7 @@
 ARG COMFYUI_VERSION=v0.3.33
 
 # Base downloader stage with common setup
-FROM nvidia/cuda:12.8.1-cudnn-runtime-ubuntu24.04
+FROM nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04
 
 # Re-declare the ARG after FROM
 ARG COMFYUI_VERSION
@@ -40,7 +40,7 @@ RUN source /app/venv/bin/activate && \
     pip install comfy-cli
 
 # Install ComfyUI
-RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI install --version $COMFYUI_VERSION --nvidia
+RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI install --version $COMFYUI_VERSION --cuda-version 12.6 --nvidia
 
 # Install ComfyUI custom_nodes
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI node install comfyui-manager
