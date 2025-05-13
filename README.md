@@ -28,33 +28,45 @@ A lightweight container with small models that can run on limited hardware.
 
 **Ideal for:** Edge devices, personal computers with limited resources, quick experimentation
 
+### 🏃 Medium Container (`ollama/Dockerfile.medium`)
+
+A balanced container with powerful large models but still optimized for general use.
+
+**Models included:**
+- **Llama3:70b** (4-bit quantized): Meta's most powerful multilingual LLM optimized for dialogue
+- **Hermes3:70b** (4-bit quantized): Powerful generalist language model with advanced reasoning capabilities
+- **Deepseek-R1:70b** (4-bit quantized): DeepSeek's first-generation reasoning model with exceptional performance
+- **Qwen3:32b** (8-bit quantized): Qwen's latest model with improved multilingual capabilities
+
+**Ideal for:** Standard workstations, development environments, general production use
+
 ### 🐘 Large Container (`ollama/Dockerfile.large`)
 
 A high-performance container with larger models for advanced capabilities.
 
 **Models included:**
-- **Llama3:70b** (4-bit quantized): Meta's most powerful multilingual LLM optimized for dialogue, outperforming many open and closed source chat models
-- **Hermes3:70b** (4-bit quantized): Powerful generalist language model with advanced agentic capabilities, improved reasoning, and long context coherence
-- **Deepseek-R1:70b** (4-bit quantized): DeepSeek's first-generation reasoning model with performance comparable to OpenAI-o1
+- **Llama3:70b** (8-bit quantized): Meta's most powerful multilingual LLM optimized for dialogue, outperforming many open and closed source chat models
+- **Hermes3:70b** (8-bit quantized): Powerful generalist language model with advanced agentic capabilities, improved reasoning, and long context coherence
+- **Deepseek-R1:70b** (8-bit quantized): DeepSeek's first-generation reasoning model with performance comparable to OpenAI-o1
 - **Llama4:17b** (4-bit quantized): Meta's latest multimodal MoE (Mixture-of-Experts) model with 17B active parameters (from a 109B parameter model), supporting text and image input with multilingual capabilities across 12 languages
-- **QwQ:32b** (8-bit quantized): Reasoning model achieving competitive performance against state-of-the-art reasoning models
+- **Qwen3:32b** (8-bit quantized): Qwen's latest model with improved multilingual capabilities and better instruction following
 
 **Ideal for:** High-end workstations, GPU-equipped systems, production environments
 
 ### ⚡ Fast Container (`ollama/Dockerfile.fast`)
 
-Combines small and medium models for a balance of speed and capability.
+Combines various models for a balance of speed and capability.
 
 **Models included:**
 - All models from the small container
+- **QwQ:32b** (4-bit quantized): Qwen's specialized reasoning model capable of enhanced performance on complex reasoning tasks
+- **Gemma3:27b** (4-bit quantized): Google's powerful multimodal model built on Gemini technology
+- **Phi4:14b** (8-bit quantized): Microsoft's state-of-the-art 14B parameter model with 16k token context window
+- **Llama3.2-vision:11b** (8-bit quantized): Meta's vision-language model capable of understanding images
 - **Llama3:8b** (8-bit quantized): Meta's multilingual model optimized for dialogue use cases
 - **Hermes3:8b** (8-bit quantized): Enhanced version with improved multi-turn conversation capabilities
 - **Deepseek-R1:8b** (8-bit quantized): Reasoning-focused model with performance comparable to larger models
-- **Phi4:14b** (8-bit quantized): Microsoft's state-of-the-art 14B parameter model with 16k token context window, built on synthetic data and optimized for instruction following
-- **Gemma3:27b** (4-bit quantized): Google's powerful multimodal model built on Gemini technology, featuring a 128K context window and support for over 140 languages
-- **Llama3.2-vision:11b** (8-bit quantized): Meta's vision-language model capable of understanding images and responding to visual queries
 - **Granite3:2b** (8-bit quantized): A small and efficient visual reasoning model for tasks involving images
-- **QwQ:32b** (4-bit quantized): Qwen's specialized reasoning model capable of enhanced performance on complex reasoning tasks
 
 **Ideal for:** Development environments requiring a variety of model sizes
 
@@ -63,8 +75,20 @@ Combines small and medium models for a balance of speed and capability.
 A comprehensive collection of all models across all size categories.
 
 **Models included:**
-- All models
-- **Qwen2.5-coder:32b** (8-bit quantized): Larger code-specific Qwen model for advanced code tasks
+- All models from small, medium, and fast containers
+- **Llama3:70b** (4-bit quantized): Meta's most powerful multilingual LLM
+- **Hermes3:70b** (4-bit quantized): Powerful generalist language model
+- **Deepseek-R1:70b** (4-bit quantized): DeepSeek's reasoning model
+- **QwQ:32b** (8-bit quantized): Qwen's specialized reasoning model
+- **Gemma3:27b** (4-bit quantized): Google's powerful multimodal model
+- **Phi4:14b** (8-bit quantized): Microsoft's state-of-the-art model
+- **Llama3.2-vision:11b** (8-bit quantized): Meta's vision-language model
+- **Llama3:8b** (8-bit quantized): Meta's multilingual model
+- **Hermes3:8b** (8-bit quantized): Enhanced version of Llama3 8B
+- **Deepseek-R1:8b** (8-bit quantized): Reasoning-focused model
+- **Granite3:2b** (8-bit quantized): Visual reasoning model
+- **Llama3:3b** (8-bit quantized): Meta's lightweight model
+- **Hermes3:3b** (8-bit quantized): User-aligned model
 
 **Ideal for:** Testing environments, situations where model flexibility is paramount
 

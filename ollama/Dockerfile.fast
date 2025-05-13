@@ -45,7 +45,7 @@ RUN /init-models.sh "phi4:14b-q8_0" "phi4:14b"
 FROM base-downloader AS llama3-vision-downloader
 RUN /init-models.sh "llama3.2-vision:11b-instruct-q8_0" "llama3.2-vision:11b"
 
-FROM base-downloader AS llama-8b-downloader
+FROM base-downloader AS llama3-8b-downloader
 RUN /init-models.sh "llama3.1:8b-instruct-q8_0" "llama3:8b"
 
 FROM base-downloader AS hermes-8b-downloader
@@ -57,7 +57,7 @@ RUN /init-models.sh "deepseek-r1:8b-llama-distill-q8_0" "deepseek-r1:8b"
 FROM base-downloader AS granite3-downloader
 RUN /init-models.sh "granite3.2-vision:2b-q8_0" "granite3:2b"
 
-FROM base-downloader AS llama-3b-downloader
+FROM base-downloader AS llama3-3b-downloader
 RUN /init-models.sh "llama3.2:3b-instruct-q8_0" "llama3:3b"
 
 FROM base-downloader AS hermes-3b-downloader
@@ -75,11 +75,11 @@ COPY --chown=ollama:ollama --from=qwq-32b-downloader /root/.ollama/models /home/
 COPY --chown=ollama:ollama --from=gemma3-27b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=phi4-14b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=llama3-vision-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=llama-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=llama3-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=deepseek-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=granite3-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=llama-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=llama3-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
 USER 65532:65532

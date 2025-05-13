@@ -29,7 +29,7 @@ EOF
 RUN chmod +x /init-models.sh
 
 # Separate stage for each model
-FROM base-downloader AS llama-70b-downloader
+FROM base-downloader AS llama3-70b-downloader
 RUN /init-models.sh "llama3.3:70b-instruct-q4_K_M" "llama3:70b"
 
 FROM base-downloader AS hermes-70b-downloader
@@ -47,7 +47,7 @@ RUN /init-models.sh "qwq:32b-q8_0" "qwq:32b"
 FROM base-downloader AS gemma3-27b-downloader
 RUN /init-models.sh "gemma3:27b" "gemma3:27b"
 
-FROM base-downloader AS llama-8b-downloader
+FROM base-downloader AS llama3-8b-downloader
 RUN /init-models.sh "llama3.1:8b-instruct-q8_0" "llama3:8b"
 
 FROM base-downloader AS hermes-8b-downloader
@@ -59,7 +59,7 @@ RUN /init-models.sh "phi4:14b-q8_0" "phi4:14b"
 FROM base-downloader AS deepseek-8b-downloader
 RUN /init-models.sh "deepseek-r1:8b-llama-distill-q8_0" "deepseek-r1:8b"
 
-FROM base-downloader AS llama-3b-downloader
+FROM base-downloader AS llama3-3b-downloader
 RUN /init-models.sh "llama3.2:3b-instruct-q8_0" "llama3:3b"
 
 FROM base-downloader AS hermes-3b-downloader
@@ -73,17 +73,17 @@ RUN groupadd -r -g 65532 ollama && \
     useradd -r -m -u 65532 -g ollama ollama
 
 # Copy models from each builder
-COPY --chown=ollama:ollama --from=llama-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=llama3-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=deepseek-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=qwen2.5-coder-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=qwq-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=gemma3-27b-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=llama-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=llama3-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=phi4-14b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=deepseek-8b-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=llama-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=llama3-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-3b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
 USER 65532:65532
