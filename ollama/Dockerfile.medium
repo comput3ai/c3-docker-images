@@ -29,17 +29,17 @@ EOF
 RUN chmod +x /init-models.sh
 
 # Separate stage for each model
-FROM base-downloader AS llama3-70b-downloader
-RUN /init-models.sh "llama3.3:70b-instruct-q8_0" "llama3:70b"
+FROM base-downloader AS llama-70b-downloader
+RUN /init-models.sh "llama3.3:70b-instruct-q4_K_M" "llama3:70b"
 
 FROM base-downloader AS hermes-70b-downloader
-RUN /init-models.sh "hermes3:70b-llama3.1-q8_0" "hermes3:70b"
+RUN /init-models.sh "hermes3:70b-llama3.1-q4_K_M" "hermes3:70b"
 
 FROM base-downloader AS deepseek-70b-downloader
-RUN /init-models.sh "deepseek-r1:70b-llama-distill-q8_0" "deepseek-r1:70b"
+RUN /init-models.sh "deepseek-r1:70b-llama-distill-q4_K_M" "deepseek-r1:70b"
 
-FROM base-downloader AS llama4-17b-downloader
-RUN /init-models.sh "llama4:17b-scout-16e-instruct-q4_K_M" "llama4:17b"
+FROM base-downloader AS qwq-32b-downloader
+RUN /init-models.sh "qwq:32b-q8_0" "qwq:32b"
 
 # Final image
 FROM ollama/ollama:${OLLAMA_VERSION}
@@ -49,9 +49,9 @@ RUN groupadd -r -g 65532 ollama && \
     useradd -r -m -u 65532 -g ollama ollama
 
 # Copy models from each builder
-COPY --chown=ollama:ollama --from=llama3-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=llama-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=hermes-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
 COPY --chown=ollama:ollama --from=deepseek-70b-downloader /root/.ollama/models /home/ollama/.ollama/models
-COPY --chown=ollama:ollama --from=llama4-17b-downloader /root/.ollama/models /home/ollama/.ollama/models
+COPY --chown=ollama:ollama --from=qwq-32b-downloader /root/.ollama/models /home/ollama/.ollama/models
 
 USER 65532:65532
