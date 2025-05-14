@@ -28,9 +28,9 @@ A lightweight container with small models that can run on limited hardware.
 
 **Ideal for:** Edge devices, personal computers with limited resources, quick experimentation
 
-### 🏃 Medium Container (`ollama/Dockerfile.medium`)
+### 🐘 Large Container (`ollama/Dockerfile.large`)
 
-A balanced container with powerful large models but still optimized for general use.
+A high-performance container with larger models for advanced capabilities.
 
 **Models included:**
 - **Llama3:70b** (4-bit quantized): Meta's most powerful multilingual LLM optimized for dialogue
@@ -38,20 +38,20 @@ A balanced container with powerful large models but still optimized for general 
 - **Deepseek-R1:70b** (4-bit quantized): DeepSeek's first-generation reasoning model with exceptional performance
 - **Qwen3:32b** (8-bit quantized): Qwen's latest model with improved multilingual capabilities
 
-**Ideal for:** Standard workstations, development environments, general production use
+**Ideal for:** High-end workstations, GPU-equipped systems, production environments
 
-### 🐘 Large Container (`ollama/Dockerfile.large`)
+### 🌟 XLarge Container (`ollama/Dockerfile.xlarge`)
 
-A high-performance container with larger models for advanced capabilities.
+A premium-quality container with larger models in higher quality formats.
 
 **Models included:**
 - **Llama3:70b** (8-bit quantized): Meta's most powerful multilingual LLM optimized for dialogue, outperforming many open and closed source chat models
 - **Hermes3:70b** (8-bit quantized): Powerful generalist language model with advanced agentic capabilities, improved reasoning, and long context coherence
 - **Deepseek-R1:70b** (8-bit quantized): DeepSeek's first-generation reasoning model with performance comparable to OpenAI-o1
-- **Llama4:17b** (4-bit quantized): Meta's latest multimodal MoE (Mixture-of-Experts) model with 17B active parameters (from a 109B parameter model), supporting text and image input with multilingual capabilities across 12 languages
-- **Qwen3:32b** (8-bit quantized): Qwen's latest model with improved multilingual capabilities and better instruction following
+- **Llama4:17b** (4-bit quantized): Meta's latest multimodal MoE (Mixture-of-Experts) model with 17B active parameters (from a 109B parameter model)
+- **Qwen3:32b** (full precision): Qwen's latest model with improved multilingual capabilities and better instruction following
 
-**Ideal for:** High-end workstations, GPU-equipped systems, production environments
+**Ideal for:** High-end workstations with significant GPU memory, production environments requiring the highest quality models
 
 ### ⚡ Fast Container (`ollama/Dockerfile.fast`)
 
@@ -70,12 +70,12 @@ Combines various models for a balance of speed and capability.
 
 **Ideal for:** Development environments requiring a variety of model sizes
 
-### 🌟 All Container (`ollama/Dockerfile.all`)
+### 🖥️ All Models Container (`ollama/Dockerfile.all`)
 
 A comprehensive collection of all models across all size categories.
 
 **Models included:**
-- All models from small, medium, and fast containers
+- All models from small and fast containers plus all large models
 - **Llama3:70b** (4-bit quantized): Meta's most powerful multilingual LLM
 - **Hermes3:70b** (4-bit quantized): Powerful generalist language model
 - **Deepseek-R1:70b** (4-bit quantized): DeepSeek's reasoning model
@@ -164,7 +164,7 @@ Comput3.AI publishes these Docker images for transparency and to help the AI com
 
 ### Building from Source
 
-To build the standard set of Ollama images (small, medium, large), use the build script:
+To build the standard set of Ollama images (small, large, xlarge), use the build script:
 
 ```bash
 git clone https://github.com/comput3/c3-docker-images.git
@@ -213,9 +213,9 @@ Building these images requires downloading the AI models, which can vary in time
 
 Approximate build times on a 500Mbps connection:
 - 🪶 Small container: 3-6 minutes
-- 🏃 Medium container: 9-18 minutes
-- 🐘 Large container: 25-50 minutes
-- 🌟 All container: 35-70 minutes
+- 🐘 Large container: 20-40 minutes
+- 🌟 XLarge container: 30-60 minutes
+- 🖥️ All container: 35-70 minutes
 - 💻 Coder container: 12-36 minutes
 - 🎨 ComfyUI container: 15-30 minutes
 - 🎤 WhisperX Gradio container: 10-20 minutes
@@ -243,10 +243,10 @@ Please note that while these Docker images are provided under the MIT license, t
 ### Running Ollama 🤖
 
 ```bash
-docker run -d --name ollama -p 11434:11434 comput3/ollama:medium
+docker run -d --name ollama -p 11434:11434 comput3/ollama:large
 ```
 
-You can swap `:medium` with `:small`, `:large`, `:fast`, `:all`, or `:coder` depending on your needs!
+You can swap `:large` with `:small`, `:xlarge`, `:fast`, `:all`, or `:coder` depending on your needs!
 
 ### Running Open WebUI 🖥️
 
@@ -287,7 +287,7 @@ For the best experience, connect multiple containers using Docker Compose:
 version: '3'
 services:
   ollama:
-    image: comput3/ollama:medium
+    image: comput3/ollama:large  # You can swap with :small, :xlarge, :fast, :all, or :coder
     ports:
       - "11434:11434"
     volumes:
@@ -343,10 +343,10 @@ Run with: `docker-compose up -d` 🚀
 Recommended minimum specs for each container type:
 
 - 🪶 **Small**: 4GB RAM, 2 CPU cores, 5GB disk space
-- 🏃 **Medium**: 8GB RAM, 4 CPU cores, 15GB disk space
-- 🐘 **Large**: 16GB RAM, 8 CPU cores, 40GB disk space + GPU recommended
+- 🐘 **Large**: 16GB RAM, 8 CPU cores, 30GB disk space + GPU recommended
 - ⚡ **Fast**: 8GB RAM, 4 CPU cores, 20GB disk space
-- 🌟 **All**: 32GB RAM, 8+ CPU cores, 60GB disk space + GPU strongly recommended
+- 🌟 **XLarge**: 32GB RAM, 8+ CPU cores, 50GB disk space + GPU strongly recommended
+- 🖥️ **All**: 32GB RAM, 8+ CPU cores, 60GB disk space + GPU strongly recommended
 - 💻 **Coder**: 16GB RAM, 8 CPU cores, 30GB disk space + GPU recommended
 - 🎨 **ComfyUI**: 16GB RAM, 6 CPU cores, 10GB disk space + NVIDIA GPU required
 - 🎤 **WhisperX Gradio**: 8GB RAM, 4 CPU cores, 10GB disk space + GPU recommended for faster transcription
