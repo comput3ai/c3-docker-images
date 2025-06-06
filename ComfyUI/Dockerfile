@@ -1,5 +1,5 @@
 # Define the version as a build argument
-ARG COMFYUI_VERSION=v0.3.33
+ARG COMFYUI_VERSION=v0.3.40
 
 # Base downloader stage with common setup
 FROM nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04
@@ -62,4 +62,4 @@ RUN mkdir -p /app/ComfyUI/models/checkpoints /app/ComfyUI/models/sonic /app/Comf
 EXPOSE 8188
 
 # Set the entrypoint to source the venv and then launch ComfyUI
-ENTRYPOINT ["/bin/bash", "-c", "source /app/venv/bin/activate && comfy --workspace /app/ComfyUI launch -- --listen 0.0.0.0"]
+ENTRYPOINT ["/bin/bash", "-c", "source /app/venv/bin/activate && comfy --workspace /app/ComfyUI launch -- --listen 0.0.0.0 --enable-cors-header --highvram"]
