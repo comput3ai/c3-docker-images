@@ -1,21 +1,15 @@
 FROM ghcr.io/comput3ai/c3-trellis-gradio
 
-## Run to download models
-#RUN set -e && \
-#    bash -c ' \
-#    # Start the application \
-#    ./venv/bin/python app.py & \
-#    # Store the PID \
-#    APP_PID=$! \
-#    # Wait for initialization (120 seconds) \
-#    echo "Waiting for initialization..." && \
-#    sleep 900 && \
-#    echo "Initialization period complete" && \
-#    # Kill the main process \
-#    kill $APP_PID && \
-#    # Wait for process to terminate \
-#    wait $APP_PID || true && \
-#    echo "Initialization completed successfully"'
+# Copy the preload script
+COPY --chmod=755 preload.py /app/preload.py
+
+# Set default model repo environment variable
+ENV TRELLIS_MODEL_REPO="jetx/trellis-image-large"
+
+# Run the preload script to download all models during build
+# This will cache both HuggingFace and torch.hub models
+# HF_TOKEN should be set in the build environment if needed
+RUN ./venv/bin/python /app/preload.py
 
 # Set the final command
 CMD ["./venv/bin/python", "app.py"]
