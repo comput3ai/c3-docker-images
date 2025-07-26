@@ -1,4 +1,4 @@
-FROM ghcr.io/comput3ai/c3-csm-gradio:latest
+FROM ghcr.io/comput3ai/c3-unirig-gradio:latest
 ARG HF_TOKEN
 
 # Copy the preloadialization script
