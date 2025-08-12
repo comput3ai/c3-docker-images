@@ -60,6 +60,12 @@ RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyU
 # Create model directories to ensure proper permissions
 RUN mkdir -p /app/ComfyUI/models/checkpoints /app/ComfyUI/models/sonic /app/ComfyUI/models/vae /app/ComfyUI/models/text_encoders /app/ComfyUI/models/diffusion_models /app/ComfyUI/models/clip_vision
 
+# Create ComfyUI-Manager directory for config
+RUN mkdir -p /app/ComfyUI/user/default/ComfyUI-Manager/
+
+# Copy config.ini file with correct permissions
+COPY --chown=comfyuser:comfyuser config.ini /app/ComfyUI/user/default/ComfyUI-Manager/config.ini
+
 # Expose port (default ComfyUI port is 8188)
 EXPOSE 8188
 
