@@ -37,8 +37,9 @@ SHELL ["/bin/bash", "-c"]
 # Install comfy-cli and required dependencies
 RUN source /app/venv/bin/activate && \
     pip install --upgrade pip && \
-    pip install torch torchvision torchaudio && \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126 && \
     pip install triton && \
+    pip install sageattention && \
     pip install comfy-cli
 
 # Install ComfyUI
