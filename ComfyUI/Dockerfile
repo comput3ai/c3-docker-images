@@ -1,5 +1,5 @@
 # Define the version as a build argument
-ARG COMFYUI_VERSION=v0.3.40
+ARG COMFYUI_VERSION=v0.3.49
 
 # Base downloader stage with common setup
 FROM nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04
