@@ -2,7 +2,7 @@
 ARG COMFYUI_VERSION=v0.3.49
 
 # Base downloader stage with common setup
-FROM nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04
+FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
 
 # Re-declare the ARG after FROM
 ARG COMFYUI_VERSION
