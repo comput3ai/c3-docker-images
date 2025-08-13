@@ -4,6 +4,10 @@ ARG COMFYUI_VERSION=v0.3.49
 # Base downloader stage with common setup
 FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
 
+# Set CUDA architectures for building without GPUs
+# SageAttention supports: 8.0, 8.6, 8.9, 9.0, 12.0
+ENV TORCH_CUDA_ARCH_LIST="8.0;8.6;8.9;9.0"
+
 # Re-declare the ARG after FROM
 ARG COMFYUI_VERSION
 
@@ -28,9 +32,6 @@ RUN chown -R comfyuser:comfyuser /app
 # Switch to the non-root user
 USER comfyuser
 
-# Set CUDA architectures for building without GPUs
-ENV TORCH_CUDA_ARCH_LIST="8.0;8.6;8.7;8.9;9.0;12.0;12.1"
-
 # Create virtual environment
 RUN python3 -m venv /app/venv
 
@@ -42,12 +43,11 @@ RUN source /app/venv/bin/activate && \
     pip install --upgrade pip && \
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126 && \
     pip install triton && \
-    pip install sageattention && \
     pip install comfy-cli
 
-# Build and install SageAttention2 from source
+# Build and install SageAttention2 from source (using our fork with GPU detection bypass)
 RUN source /app/venv/bin/activate && \
-    git clone https://github.com/thu-ml/SageAttention.git /tmp/SageAttention && \
+    git clone https://github.com/comput3ai/SageAttention.git /tmp/SageAttention && \
     cd /tmp/SageAttention && \
     python setup.py install && \
     cd / && \
