@@ -42,6 +42,14 @@ RUN source /app/venv/bin/activate && \
     pip install sageattention && \
     pip install comfy-cli
 
+# Build and install SageAttention2 from source
+RUN source /app/venv/bin/activate && \
+    git clone https://github.com/thu-ml/SageAttention.git /tmp/SageAttention && \
+    cd /tmp/SageAttention && \
+    pip install -e . && \
+    cd / && \
+    rm -rf /tmp/SageAttention
+
 # Install ComfyUI
 RUN source /app/venv/bin/activate && comfy --skip-prompt --workspace /app/ComfyUI install --version $COMFYUI_VERSION --cuda-version 12.6 --nvidia
 
