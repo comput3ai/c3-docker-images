@@ -28,6 +28,9 @@ RUN chown -R comfyuser:comfyuser /app
 # Switch to the non-root user
 USER comfyuser
 
+# Set CUDA architectures for building without GPUs
+ENV TORCH_CUDA_ARCH_LIST="8.0;8.6;8.7;8.9;9.0;12.0;12.1"
+
 # Create virtual environment
 RUN python3 -m venv /app/venv
 
