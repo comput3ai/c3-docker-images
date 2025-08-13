@@ -46,7 +46,7 @@ RUN source /app/venv/bin/activate && \
 RUN source /app/venv/bin/activate && \
     git clone https://github.com/thu-ml/SageAttention.git /tmp/SageAttention && \
     cd /tmp/SageAttention && \
-    pip install -e . && \
+    python setup.py install && \
     cd / && \
     rm -rf /tmp/SageAttention
 
